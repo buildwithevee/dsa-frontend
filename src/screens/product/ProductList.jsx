@@ -4,6 +4,7 @@ import "./ProductList.scss";
 import AreaTableAction from "../../components/dashboard/areaTable/AreaTableAction";
 import { ThemeContext } from "../../context/ThemeContext";
 import { DARK_THEME, LIGHT_THEME } from "../../constants/themeConstants";
+import { apiBaseUrl } from "../../constants/Constant";
 
 // Table header definition
 const TABLE_HEADS = [
@@ -31,7 +32,7 @@ const ProductList = () => {
 
             // Make the API call
             const response = await axios.get(
-                `http://localhost:5000/api/product/search?searchTerm=${searchTerm}`
+                `${apiBaseUrl}/product/search?searchTerm=${searchTerm}`
             );
 
             if (response?.status === 200) {
