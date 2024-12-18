@@ -5,6 +5,7 @@ import { LIGHT_THEME, DARK_THEME } from '../../constants/themeConstants';
 import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import default styles
 import { useNavigate } from 'react-router-dom';
+import { apiBaseUrl } from '../../constants/Constant';
 const ProductAddPage = () => {
     const [productData, setProductData] = useState({
         DeviceName: '',
@@ -28,7 +29,7 @@ const ProductAddPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/product/create', productData);
+            const response = await axios.post(`${apiBaseUrl}/product/create`, productData);
             if (response.status === 201) {
                 toast.success('🎉 Product added successfully!', {
                     position: "top-right",

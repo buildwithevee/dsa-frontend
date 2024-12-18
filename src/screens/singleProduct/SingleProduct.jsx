@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners"
+import { apiBaseUrl } from "../../constants/Constant";
 const ProductDetail = () => {
     const { id } = useParams(); // Extract ID from URL
     const [product, setProduct] = useState(null); // State to store product details
@@ -15,7 +16,7 @@ const ProductDetail = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/api/product/generate", { productId: id });
+            const response = await axios.post(`${apiBaseUrl}/product/generate`, { productId: id });
 
             if (response.status === 200) {
                 const qrCodeData = response.data.qrCodeData;
@@ -43,7 +44,7 @@ const ProductDetail = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(
-                    `http://localhost:5000/api/product/each/${id}`
+                    `${apiBaseUrl}/product/each/${id}`
                 );
                 if (response.status === 200) {
                     setProduct(response.data.product); // Access the 'product' key

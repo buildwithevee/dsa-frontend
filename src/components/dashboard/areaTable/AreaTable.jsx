@@ -2,6 +2,7 @@ import AreaTableAction from "./AreaTableAction";
 import "./AreaTable.scss";
 import axios from "axios"
 import { useEffect, useState } from "react";
+import { apiBaseUrl } from "../../../constants/Constant";
 // const TABLE_HEADS = [
 //   "Products",
 //   "Order ID",
@@ -83,7 +84,7 @@ const AreaTable = () => {
 
   const fetchRecentProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/product/get-recent");
+      const response = await axios.get(`${apiBaseUrl}/product/get-recent`);
       if (response.status === 200) {
         setProducts(response.data?.products)
       }
