@@ -13,12 +13,14 @@ export const SidebarProvider = ({ children }) => {
     setSidebarOpen(false);
   };
 
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   return (
     <SidebarContext.Provider
       value={{
         isSidebarOpen,
         openSidebar,
         closeSidebar,
+        toggleSidebar
       }}
     >
       {children}

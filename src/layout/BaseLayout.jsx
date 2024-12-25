@@ -1,12 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { MdMenu } from "react-icons/md";
+import { useContext } from "react";
+import { SidebarContext } from "../context/SidebarContext";
 import { Sidebar } from "../components";
+import { Outlet } from "react-router-dom";
 
 const BaseLayout = () => {
+  const { toggleSidebar } = useContext(SidebarContext);
+
   return (
     <main className="page-wrapper">
-      {/* left of page */}
+      {/* Toggle button visible only on small screens */}
+      <button className="mobile-sidebar-toggle" onClick={toggleSidebar}>
+        <MdMenu size={24} />
+      </button>
+
       <Sidebar />
-      {/* right side/content of the page */}
       <div className="content-wrapper">
         <Outlet />
       </div>

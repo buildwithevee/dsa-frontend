@@ -17,7 +17,7 @@
   .data-table-diagram {
     border-radius: 6px;
     border: 1px solid var(--tbl-border-color) !important;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     &::-webkit-scrollbar {
       height: 6px;
@@ -130,6 +130,84 @@
 
     &:hover {
       opacity: 0.9;
+    }
+  }
+}
+
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  /* Pushes buttons to far edges */
+  align-items: center;
+  padding: 12px 0;
+  margin-top: 12px;
+  width: 100%;
+  /* Ensures it spans the full width of the table */
+}
+
+.pagination-btn {
+  background-color: #4f46e5;
+  /* Button color */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #3b3ae6;
+    /* Lighter shade on hover */
+  }
+
+  &.disabled {
+    background-color: #9ca3af;
+    /* Disabled button color */
+    cursor: not-allowed;
+  }
+}
+
+.pagination-info {
+  flex-grow: 1;
+  /* Fills the space between the buttons */
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color-inverted);
+}
+
+.search-bar {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 16px;
+
+  .search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 4px rgba(79, 70, 229, 0.5);
+    }
+
+    &.light-theme {
+      background-color: #fff;
+      color: #000;
+    }
+
+    &.dark-theme {
+      background-color: #2e2e48;
+      color: #fff;
+      border: 1px solid #fff;
     }
   }
 }

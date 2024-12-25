@@ -3,6 +3,7 @@ import "./AreaTable.scss";
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { apiBaseUrl } from "../../../constants/Constant";
+import { ToastContainer } from "react-toastify";
 // const TABLE_HEADS = [
 //   "Products",
 //   "Order ID",
@@ -81,6 +82,7 @@ const TABLE_HEADS = [
 const AreaTable = () => {
 
   const [products, setProducts] = useState([]);
+  const [reload, setReload] = useState(0);
 
   const fetchRecentProducts = async () => {
     try {
@@ -96,9 +98,10 @@ const AreaTable = () => {
 
   useEffect(() => {
     fetchRecentProducts();
-  }, [])
+  }, [reload])
   return (
     <section className="content-area-table">
+      <ToastContainer />
       <div className="data-table-info">
         <h4 className="data-table-title">Latest Orders</h4>
       </div>
@@ -131,7 +134,7 @@ const AreaTable = () => {
                   </td> */}
 
                   <td className="dt-cell-action">
-                    <AreaTableAction id={dataItem._id} />
+                    <AreaTableAction id={dataItem._id} reload={setReload} />
                   </td>
                 </tr>
               );

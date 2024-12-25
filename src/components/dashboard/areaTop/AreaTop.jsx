@@ -40,13 +40,13 @@ const AreaTop = () => {
 
   return (
     <section className="content-area-top">
-      <div className="area-top-l">
+      <div className="area-top-l pt-10 md:pt-0">
         <button
           className="sidebar-open-btn"
           type="button"
           onClick={openSidebar}
         >
-          <MdOutlineMenu size={24} />
+          {/* <MdOutlineMenu size={24} /> */}
         </button>
         <h2 className="area-top-title text-2xl font-bold">Dashboard</h2>
       </div>

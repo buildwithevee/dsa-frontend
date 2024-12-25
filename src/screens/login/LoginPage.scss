@@ -1,0 +1,115 @@
+/* LoginPage.scss */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+    .login-form {
+        background-color: var(--card-background);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+
+            label {
+                display: block;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                color: var(--label-color);
+            }
+
+            input {
+                width: 100%;
+                padding: 0.8rem;
+                font-size: 1rem;
+                border: 1px solid var(--input-border);
+                border-radius: 4px;
+                background-color: var(--input-background);
+                color: var(--input-text-color);
+
+                &:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 4px var(--primary-color);
+                }
+            }
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: var(--button-background);
+            color: var(--button-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: var(--button-hover);
+            }
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+/* Light Theme Variables */
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --primary-color: #437ad4;
+    --input-border: #ccc;
+    --input-background: #fff;
+    --input-text-color: #333;
+    --label-color: #555;
+    --button-background: #437ad4;
+    --button-text: #fff;
+    --button-hover: #375fa3;
+    --link-color: #437ad4;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    --background-color: #121212;
+    --text-color: #f9f9f9;
+    --card-background: #1e1e1e;
+    --primary-color: #437ad4;
+    --input-border: #444;
+    --input-background: #2c2c2c;
+    --input-text-color: #f9f9f9;
+    --label-color: #ccc;
+    --button-background: #437ad4;
+    --button-text: #fff;
+    --button-hover: #375fa3;
+    --link-color: #437ad4;
+}
