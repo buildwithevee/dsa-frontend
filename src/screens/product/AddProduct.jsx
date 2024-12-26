@@ -258,7 +258,7 @@ const ProductAddPage = () => {
                         className={`mt-2 p-3 border ${theme === LIGHT_THEME ? 'border-gray-300' : 'border-gray-600 text-white'} rounded-md  focus:ring-2 focus:ring-blue-500 focus:outline-none ${theme === DARK_THEME ? 'bg-[#383854] text-white' : 'bg-transparent'}`}
                     />
                     {showSuggestions && searchResults.length > 0 && (
-                        <ul className={`absolute z-10 mt-20 w-fit bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden ${theme === DARK_THEME ? 'bg-[#373753] text-white border-gray-600 ' : ''}`}>
+                        <ul className={`absolute z-10 mt-20 w-fit  border border-gray-300 rounded-md shadow-lg overflow-hidden ${theme === DARK_THEME ? 'bg-[#373753] text-white border-gray-600 ' : 'bg-white'}`}>
                             {searchResults.map((employee) => (
                                 <li
                                     key={employee._id}
