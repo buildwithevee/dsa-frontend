@@ -1,35 +1,55 @@
+import axios from "axios";
 import AreaCard from "./AreaCard";
 import "./AreaCards.scss";
+import { apiBaseUrl } from "../../../constants/Constant";
+import { useEffect, useState } from "react";
 
 const AreaCards = () => {
+  const [stats, setStats] = useState({})
+
+  const fetchStats = async () => {
+    try {
+      const response = await axios.get(`${apiBaseUrl}/product/stats`)
+      console.log(response.data);
+      setStats(response?.data?.data)
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+  useEffect(() => {
+    fetchStats();
+  }, [])
   return (
     <section className="content-area-cards">
       <AreaCard
         colors={["#e4e8ef", "#475be8"]}
-        percentFillValue={80}
+        percentFillValue={100}
         cardInfo={{
           title: "Total Pc's",
-          value: "$20.4K",
-          text: "We have sold 123 items.",
+          value: stats.totalPc,
+
         }}
       />
       <AreaCard
         colors={["#e4e8ef", "#4ce13f"]}
-        percentFillValue={50}
+        percentFillValue={100}
         cardInfo={{
-          title: "Todays Pc's",
-          value: "10",
-          text: "Available to payout",
+          title: "This month Pc's",
+          value: stats.totalPCThisMonth,
+
         }}
       />
 
       <AreaCard
         colors={["#e4e8ef", "#f29a2e"]}
-        percentFillValue={40}
+        percentFillValue={100}
         cardInfo={{
-          title: "In Escrow",
-          value: "$18.2K",
-          text: "Available to payout",
+          title: "Todays Pc's",
+          value: stats.totalPCThisMonth,
+
         }}
       />
     </section>

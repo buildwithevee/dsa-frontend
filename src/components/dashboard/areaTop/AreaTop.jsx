@@ -50,23 +50,7 @@ const AreaTop = () => {
         </button>
         <h2 className="area-top-title text-2xl font-bold">Dashboard</h2>
       </div>
-      {/* <div className="area-top-r">
-        <div
-          ref={dateRangeRef}
-          className={`date-range-wrapper ${
-            !showDatePicker ? "hide-date-range" : ""
-          }`}
-          onClick={handleInputClick}
-        >
-          <DateRange
-            editableDateInputs={true}
-            onChange={(item) => setState([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={state}
-            showMonthAndYearPickers={false}
-          />
-        </div>
-      </div> */}
+
     </section>
   );
 };

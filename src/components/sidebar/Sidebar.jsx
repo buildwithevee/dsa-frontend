@@ -122,7 +122,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
-                <span className="menu-link-text">Logout</span>
+                <span className="menu-link-text cursor-pointer">Logout</span>
               </div>
             </li>
           </ul>

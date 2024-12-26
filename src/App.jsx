@@ -14,7 +14,7 @@ import EditProduct from "./screens/edit/EditProduct.jsx";
 import LoginPage from "./screens/login/Login.jsx";
 import SettingsPage from "./screens/settings/SettingsPage.jsx";
 import ReportPage from "./screens/reports/ReportPage.jsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setLogin } from "./config/authSlice.js";
 import PrivateRoute from "./routes/PrivateRouter.jsx";
 import PublicRoute from "./routes/PublicRouter.jsx";
@@ -22,7 +22,7 @@ import PublicRoute from "./routes/PublicRouter.jsx";
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.isAuth);
+
 
   useEffect(() => {
     // Apply the correct theme class to the body tag

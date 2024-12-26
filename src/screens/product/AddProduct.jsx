@@ -14,20 +14,51 @@ const ProductAddPage = () => {
         EnrollDate: '',
         Compilance: false,
         AssignedTo: '',
-        warranty: false,
-        note: ""
+        warranty: "",
+        note: "",
+        branch: "",
     });
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
     const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
     const handleChange = (e) => {
+        e.preventDefault();
         const { name, value } = e.target;
         setProductData({
             ...productData,
             [name]: value
         });
-    };
 
+        // Trigger employee search on typing in AssignedTo field
+        if (name === 'AssignedTo') {
+            setSearchTerm(value);
+            if (value) {
+                searchEmployees(value);
+            } else {
+                setSearchResults([]);
+                setShowSuggestions(false);
+            }
+        }
+    };
+    const searchEmployees = async (term) => {
+        try {
+            const response = await axios.get(`${apiBaseUrl}/product/search-employee?searchTerm=${term}`);
+            if (response.status === 200 && response.data.success) {
+                setSearchResults(response.data.employees || []);
+                setShowSuggestions(true);
+            }
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+            setSearchResults([]);
+        }
+    };
+    const handleSuggestionClick = (employee) => {
+        setProductData({ ...productData, AssignedTo: employee.Emlpoyee_Name });
+        setShowSuggestions(false);
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -49,7 +80,9 @@ const ProductAddPage = () => {
                     SerialNumber: '',
                     EnrollDate: '',
                     Compilance: false,
-                    AssignedTo: ''
+                    AssignedTo: '',
+                    branch: "",
+                    note: "", warranty: ""
                 });
                 navigate(`/product/${response.data?.product?._id}`);
             }
@@ -165,20 +198,50 @@ const ProductAddPage = () => {
                     <label className={`text-sm font-medium ${theme === LIGHT_THEME ? 'text-gray-700' : 'text-white'}`}>
                         Warranty
                     </label>
-                    <div className="flex items-center mt-2">
-                        <input
-                            type="checkbox"
-                            id="warranty"
-                            name="warranty"
-                            checked={productData.warranty}
-                            onChange={(e) => setProductData({ ...productData, warranty: e.target.checked })}
-                            className="form-checkbox h-5 w-5 text-blue-500"
-                        />
-                        <span className={`ml-2 ${theme === LIGHT_THEME ? 'text-gray-700' : 'text-white'}`}>
-                            Mark as warranty item
-                        </span>
+                    <input
+                        type="date"
+                        id="warranty"
+                        name="warranty"
+                        value={productData.warranty}
+                        onChange={handleChange}
+                        className={`mt-2 p-3 border ${theme === LIGHT_THEME ? 'border-gray-300' : 'border-gray-600 text-white'} rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none ${theme === DARK_THEME ? 'bg-[#383854] text-white' : 'bg-transparent'}`}
+                    />
+                    <style >{`
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(${theme === LIGHT_THEME ? '0' : '1'}) brightness(0.5);
+        }
+    `}</style>
+                </div>
+
+                {/* Branch */}
+                <div className="flex flex-col">
+                    <label className={`text-sm font-medium ${theme === LIGHT_THEME ? 'text-gray-700' : 'text-white'}`}>
+                        Branch
+                    </label>
+                    <div className="mt-2">
+                        <select
+                            value={productData.branch || ""}
+                            required
+                            onChange={(e) => setProductData({ ...productData, branch: e.target.value })}
+                            className={`p-2 w-full rounded-md border ${theme === LIGHT_THEME ? 'bg-white text-gray-700' : 'bg-gray-700 text-white'} focus:outline-none`}
+                        >
+                            <option value="">Select a branch</option>
+                            <option value="JEDDAH-Z13108G4Q62YHF8">JEDDAH-Z13108G4Q62YHF8</option>
+                            <option value="RIYADH-HQ X330046RG6MXC62">RIYADH-HQ X330046RG6MXC62</option>
+                            <option value="MAKKAH-X13108GWK2D3Q37">MAKKAH-X13108GWK2D3Q37</option>
+                            <option value="JEZAN-X133006QJVGPD72">JEZAN-X133006QJVGPD72</option>
+                            <option value="RAAS-X133006PYGDFV11">RAAS-X133006PYGDFV11</option>
+                            <option value="ALBAHA-X13108C2YMCRQ35">ALBAHA-X13108C2YMCRQ35</option>
+                            <option value="ABHA-X13108KTJ3BRD4C">ABHA-X13108KTJ3BRD4C</option>
+                            <option value="ALJOUF-X13108G4GJ8HD05">ALJOUF-X13108G4GJ8HD05</option>
+                            <option value="HAIL-X13108M2RCWBB94">HAIL-X13108M2RCWBB94</option>
+                            <option value="MADINAH-X13108M3767BD27">MADINAH-X13108M3767BD27</option>
+                            <option value="SHIFA-X13108GH2K43Y94">SHIFA-X13108GH2K43Y94</option>
+                            {/* Add more branches as needed */}
+                        </select>
                     </div>
                 </div>
+
 
                 {/* Assigned To */}
                 <div className="flex flex-col">
@@ -194,6 +257,19 @@ const ProductAddPage = () => {
                         required
                         className={`mt-2 p-3 border ${theme === LIGHT_THEME ? 'border-gray-300' : 'border-gray-600 text-white'} rounded-md  focus:ring-2 focus:ring-blue-500 focus:outline-none ${theme === DARK_THEME ? 'bg-[#383854] text-white' : 'bg-transparent'}`}
                     />
+                    {showSuggestions && searchResults.length > 0 && (
+                        <ul className={`absolute z-10 mt-20 w-fit bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden ${theme === DARK_THEME ? 'bg-[#373753] text-white border-gray-600 ' : ''}`}>
+                            {searchResults.map((employee) => (
+                                <li
+                                    key={employee._id}
+                                    className={`px-4 py-2 hover:bg-blue-600 cursor-pointer ${theme === LIGHT_THEME ? "hover:text-white" : ""} `}
+                                    onClick={() => handleSuggestionClick(employee)}
+                                >
+                                    {employee.Emlpoyee_Name} (ID: {employee.Emp_ID})
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
                 {/* Note */}
                 <div className="flex flex-col">

@@ -114,6 +114,11 @@ const ReportPage = () => {
                             } rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none ${theme === DARK_THEME ? 'bg-[#383854] text-white' : 'bg-transparent'
                             }`}
                     />
+                    <style >{`
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(${theme === LIGHT_THEME ? '0' : '1'}) brightness(0.5);
+        }
+    `}</style>
                 </div>
 
                 {/* Submit Button */}
