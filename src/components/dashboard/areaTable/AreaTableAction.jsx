@@ -95,7 +95,7 @@ const AreaTableAction = ({ id, reload }) => {
       >
         <HiDotsHorizontal size={18} />
         {showDropdown && (
-          <div className="action-dropdown-menu z-50" ref={dropdownRef}>
+          <div className="action-dropdown-menu " ref={dropdownRef}>
             <ul className="dropdown-menu-list">
               <li className="dropdown-menu-item">
                 <Link to={`/product/${id}`} className="dropdown-menu-link">

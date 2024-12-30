@@ -226,17 +226,17 @@ const ProductAddPage = () => {
                             className={`p-2 w-full rounded-md border ${theme === LIGHT_THEME ? 'bg-white text-gray-700' : 'bg-gray-700 text-white'} focus:outline-none`}
                         >
                             <option value="">Select a branch</option>
-                            <option value="JEDDAH-Z13108G4Q62YHF8">JEDDAH-Z13108G4Q62YHF8</option>
-                            <option value="RIYADH-HQ X330046RG6MXC62">RIYADH-HQ X330046RG6MXC62</option>
-                            <option value="MAKKAH-X13108GWK2D3Q37">MAKKAH-X13108GWK2D3Q37</option>
-                            <option value="JEZAN-X133006QJVGPD72">JEZAN-X133006QJVGPD72</option>
-                            <option value="RAAS-X133006PYGDFV11">RAAS-X133006PYGDFV11</option>
-                            <option value="ALBAHA-X13108C2YMCRQ35">ALBAHA-X13108C2YMCRQ35</option>
-                            <option value="ABHA-X13108KTJ3BRD4C">ABHA-X13108KTJ3BRD4C</option>
-                            <option value="ALJOUF-X13108G4GJ8HD05">ALJOUF-X13108G4GJ8HD05</option>
-                            <option value="HAIL-X13108M2RCWBB94">HAIL-X13108M2RCWBB94</option>
-                            <option value="MADINAH-X13108M3767BD27">MADINAH-X13108M3767BD27</option>
-                            <option value="SHIFA-X13108GH2K43Y94">SHIFA-X13108GH2K43Y94</option>
+                            <option value="JEDDAH">JEDDAH</option>
+                            <option value="RIYADH">RIYADH</option>
+                            <option value="MAKKAH">MAKKAH</option>
+                            <option value="JEZAN">JEZAN</option>
+                            <option value="RAAS">RAAS</option>
+                            <option value="ALBAHA">ALBAHA</option>
+                            <option value="ABHA">ABHA</option>
+                            <option value="ALJOUF">ALJOUF</option>
+                            <option value="HAIL">HAIL</option>
+                            <option value="MADINAH">MADINAH</option>
+                            <option value="SHIFA">SHIFA</option>
                             {/* Add more branches as needed */}
                         </select>
                     </div>

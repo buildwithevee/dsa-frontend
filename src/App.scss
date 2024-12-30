@@ -163,8 +163,9 @@ ul {
 
 // content
 .content-area {
-  & > section {
+  &>section {
     margin-bottom: 16px;
+
     &:last-child {
       margin-bottom: 0;
     }
