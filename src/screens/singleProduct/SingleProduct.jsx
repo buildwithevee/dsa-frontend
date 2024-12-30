@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
@@ -154,7 +154,7 @@ const ProductDetail = () => {
                         }
                     />
                     <DetailItem
-                        label="Warranty"
+                        label="Warranty Date"
                         value={
                             product.warranty ? (
                                 <span className="font-medium">{product?.warranty?.split('T')[0]}</span>
@@ -163,6 +163,16 @@ const ProductDetail = () => {
                             )
                         }
                     />
+                    {
+                        product?.warranty && (<DetailItem
+                            label="Warranty"
+                            value={
+                                product.warrantyLeft && (
+                                    <div className={`font-medium ${product?.warrantyLeft === "Expired" ? "text-red-600" : "text-green-500"}`}>{product?.warrantyLeft}</div>
+                                )
+                            }
+                        />)
+                    }
                     <DetailItem
                         label="Branch"
                         value={

@@ -1,10 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ children }) => {
-  const isLogin = useSelector((state) => state.isAuth);
+  const isAuth = !!localStorage.getItem("authToken"); // Check token presence in localStorage
 
-  return isLogin ? children : <Navigate to="/login" replace />;
+  return isAuth ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;
