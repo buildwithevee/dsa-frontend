@@ -4,16 +4,16 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { LIGHT_THEME, DARK_THEME } from '../../constants/themeConstants';
 import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import default styles
-import { useNavigate } from 'react-router-dom';
+
 import { apiBaseUrl } from '../../constants/Constant';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { ClipLoader } from 'react-spinners';
 const ReportPage = () => {
     const { theme } = useContext(ThemeContext);
-    const navigate = useNavigate();
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [branch, setBranch] = useState("");
     const [loading, setLoading] = useState("");
 
     const handleDownload = async () => {
@@ -26,7 +26,7 @@ const ReportPage = () => {
         setLoading(true);
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/reports/get-between?startDate=${startDate}&endDate=${endDate}`);
+                `${apiBaseUrl}/reports/get-between?startDate=${startDate}&endDate=${endDate}&branch=${branch}`);
 
             if (response.status !== 200) {
                 toast.error("Erro while getting data")
@@ -53,7 +53,7 @@ const ReportPage = () => {
             const blob = new Blob([excelBuffer], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
             });
-            saveAs(blob, `${startDate}to${endDate}.xlsx`);
+            saveAs(blob, `${startDate}to${endDate}${branch?`of_branch_${branch}`:""}.xlsx`);
 
             // Perform additional operations with the data if needed
             // For example, triggering a download or updating the UI
@@ -68,6 +68,33 @@ const ReportPage = () => {
             <ToastContainer />
             <h2 className={`text-2xl pt-10 md:pt-0 font-semibold mb-6 text-start ${theme === LIGHT_THEME ? 'text-gray-800' : 'text-white'}`}>Generate Report</h2>
             <div className="space-y-6">
+                <div className="flex flex-col">
+                    <label className={`text-sm font-medium ${theme === LIGHT_THEME ? 'text-gray-700' : 'text-white'}`}>
+                        Branch
+                    </label>
+                    <div className="mt-2">
+                        <select
+                            value={branch}
+                            required
+                            onChange={(e) => setBranch(e.target.value)}
+                            className={`p-2 w-full rounded-md border ${theme === LIGHT_THEME ? 'bg-white text-gray-700' : 'bg-gray-700 text-white'} focus:outline-none`}
+                        >
+                            <option value="">Select a branch</option>
+                            <option value="JEDDAH">JEDDAH</option>
+                            <option value="RIYADH">RIYADH</option>
+                            <option value="MAKKAH">MAKKAH</option>
+                            <option value="JEZAN">JEZAN</option>
+                            <option value="RAAS">RAAS</option>
+                            <option value="ALBAHA">ALBAHA</option>
+                            <option value="ABHA">ABHA</option>
+                            <option value="ALJOUF">ALJOUF</option>
+                            <option value="HAIL">HAIL</option>
+                            <option value="MADINAH">MADINAH</option>
+                            <option value="SHIFA">SHIFA</option>
+                            {/* Add more branches as needed */}
+                        </select>
+                    </div>
+                </div>
                 {/* Start Date */}
                 <div className="flex flex-col">
                     <label
@@ -120,6 +147,7 @@ const ReportPage = () => {
         }
     `}</style>
                 </div>
+
 
                 {/* Submit Button */}
                 <div className="flex justify-end mt-6">
