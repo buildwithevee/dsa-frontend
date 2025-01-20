@@ -24,7 +24,7 @@ const ProductList = () => {
     const fetchProducts = async ({ page = 1, limit = 10, searchTerm = "" }) => {
         try {
             const response = await axios.get(
-                `${apiBaseUrl}/product/search?searchTerm=${searchTerm}&limit=${limit}&page=${page}`
+                `${apiBaseUrl}/product/search?searchTerm=${searchTerm}&limit=${limit}&page=${page}&isDeleted=false`
             );
 
             if (response?.status === 200) {
@@ -131,7 +131,7 @@ const ProductList = () => {
                                         <td>{dataItem.SerialNumber}</td>
                                         <td>{dataItem.AssignedTo}</td>
                                         <td className="dt-cell-action">
-                                            <AreaTableAction id={dataItem._id} reload={setReload} />
+                                            <AreaTableAction id={dataItem._id} reload={setReload} trash={false} />
                                         </td>
                                     </tr>
                                 ))

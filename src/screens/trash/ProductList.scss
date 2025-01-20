@@ -1,0 +1,213 @@
+.content-area-table {
+  position: relative;
+  /* Ensure the table has a proper stacking context */
+  overflow: auto;
+  /* Allow dropdowns to overflow */
+
+  .data-table-title {
+    font-size: 18px;
+    color: var(--xl-text-color);
+    margin-bottom: 12px;
+  }
+
+  .data-table-diagram {
+    border-radius: 6px;
+    border: 1px solid var(--tbl-border-color) !important;
+    overflow-x: auto;
+    overflow: visible;
+    /* Ensure dropdowns are not clipped */
+
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--scroll-track-bg-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 100vh !important;
+      background-color: #e9e9e9;
+      outline: 1px solid rgba(0, 0, 0, 0.02);
+      outline-offset: -1px;
+    }
+
+    table {
+      min-width: 900px;
+      width: 100%;
+      border-collapse: collapse;
+      color: var(--text-color-inverted);
+
+      td,
+      th {
+        padding: 14px 12px;
+
+        @media (max-width: 768px) {
+          font-size: 15px;
+          padding: 12px 10px;
+        }
+      }
+
+      thead {
+        text-align: left;
+        font-size: 17px;
+        background-color: var(--thead-bg-color);
+
+        th {
+          &:last-child {
+            text-align: center;
+          }
+        }
+      }
+
+      .dt-cell-action {
+        text-align: center;
+        position: relative;
+        /* Ensure stacking context for dropdown */
+      }
+
+      .dt-status {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        column-gap: 6px;
+
+        .dt-status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 100%;
+
+          &.dot-pending {
+            background-color: var(--orange-color);
+          }
+
+          &.dot-canceled {
+            background-color: var(--red-color);
+          }
+
+          &.dot-delivered {
+            background-color: var(--green-color);
+          }
+        }
+
+        .dt-status-text {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  .action-dropdown-btn {
+    color: var(--text-color-inverted);
+    position: relative;
+  }
+
+  .action-dropdown-menu {
+    position: absolute;
+    /* Set dropdown to absolute */
+    top: -105px;
+    /* Position below the button */
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 9999;
+    /* Ensure it's above other elements */
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color-inverted);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  .dropdown-menu-item {
+    margin: 8px 0;
+  }
+
+  .dropdown-menu-link {
+    color: var(--text-color-inverted);
+    font-weight: 600;
+    transition: var(--default-transition);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  /* Pushes buttons to far edges */
+  align-items: center;
+  padding: 12px 0;
+  margin-top: 12px;
+  width: 100%;
+  /* Ensures it spans the full width of the table */
+}
+
+.pagination-btn {
+  background-color: #4f46e5;
+  /* Button color */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #3b3ae6;
+    /* Lighter shade on hover */
+  }
+
+  &.disabled {
+    background-color: #9ca3af;
+    /* Disabled button color */
+    cursor: not-allowed;
+  }
+}
+
+.pagination-info {
+  flex-grow: 1;
+  /* Fills the space between the buttons */
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color-inverted);
+}
+
+.search-bar {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 16px;
+
+  .search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 4px rgba(79, 70, 229, 0.5);
+    }
+
+    &.light-theme {
+      background-color: #fff;
+      color: #000;
+    }
+
+    &.dark-theme {
+      background-color: #2e2e48;
+      color: #fff;
+      border: 1px solid #fff;
+    }
+  }
+}

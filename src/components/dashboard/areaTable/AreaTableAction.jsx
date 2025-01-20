@@ -7,7 +7,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { LIGHT_THEME } from "../../../constants/themeConstants";
 import axios from "axios";
 import { apiBaseUrl } from "../../../constants/Constant";
-const AreaTableAction = ({ id, reload }) => {
+const AreaTableAction = ({ id, reload, trash }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -51,7 +51,7 @@ const AreaTableAction = ({ id, reload }) => {
     }
 
     try {
-      const response = await axios.delete(`${apiBaseUrl}/product/each/${id}`);
+      const response = await axios.delete(`${apiBaseUrl}/product/each${trash ? "/trash" : ""}/${id}`);
 
       if (response.status === 200) {
         reload(prev => prev + 1)
@@ -76,7 +76,60 @@ const AreaTableAction = ({ id, reload }) => {
       );
     }
   };
+  const handleRestore = async () => {
+    const confirmation = await Swal.fire({
+      title: `<span style="color: ${theme === LIGHT_THEME ? "black" : "white"};">Are you sure?</span>`,
+      html: `<span style="color: ${theme === LIGHT_THEME ? "black" : "white"};">Do you want to restore the data?</span>`,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#475be8", // Confirm button color
+      cancelButtonColor: "#d65f63", // Cancel button color
+      confirmButtonText: "Yes, restore!",
+      cancelButtonText: "Cancel",
+      background: `${theme !== LIGHT_THEME ? "#2e2e48" : "white"}`, // Dark background color
+      customClass: {
+        popup: "custom-popup",
+        confirmButton: "custom-confirm-button",
+        cancelButton: "custom-cancel-button",
+      },
+    });
 
+    if (!confirmation.isConfirmed) {
+      // User canceled the delete action
+      toast.info("Restore action canceled.", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: theme === LIGHT_THEME ? "light" : "dark",
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.patch(`${apiBaseUrl}/product/each/${id}`);
+
+      if (response.status === 200) {
+        reload(prev => prev + 1)
+
+        toast.success("Product restored successfully.", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: theme === LIGHT_THEME ? "light" : "dark",
+        });
+      }
+
+      // Optional: Perform any additional actions like refreshing the table or redirecting
+    } catch (error) {
+      console.error("Error restoring product:", error);
+      toast.error(
+        error.message || "An error occurred while trying to restore the product.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+          theme: theme === LIGHT_THEME ? "light" : "dark",
+        }
+      );
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -102,11 +155,17 @@ const AreaTableAction = ({ id, reload }) => {
                   View
                 </Link>
               </li>
-              <li className="dropdown-menu-item">
+              {!trash && <li className="dropdown-menu-item">
                 <Link to={`/product/edit/${id}`} className="dropdown-menu-link">
                   Edit
                 </Link>
-              </li>
+              </li>}
+              {trash && <li className="dropdown-menu-item">
+                <button className="dropdown-menu-link" onClick={handleRestore}>
+                  Restore
+                </button>
+
+              </li>}
               <li className="dropdown-menu-item">
                 <button className="dropdown-menu-link" onClick={handleDelete}>
                   Delete

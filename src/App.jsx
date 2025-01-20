@@ -13,6 +13,7 @@ import SingleProduct from "./screens/singleProduct/SingleProduct.jsx";
 import EditProduct from "./screens/edit/EditProduct.jsx";
 import LoginPage from "./screens/login/Login.jsx";
 import SettingsPage from "./screens/settings/SettingsPage.jsx";
+import TrashPage from "./screens/trash/TrashList.jsx";
 import ReportPage from "./screens/reports/ReportPage.jsx";
 import { useDispatch } from "react-redux";
 import { setLogin } from "./config/authSlice.js";
@@ -59,6 +60,15 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/trash"
+              element={
+                <PrivateRoute>
+                  <TrashPage />
+                </PrivateRoute>
+              }
+            />
+
             <Route
               path="/products"
               element={

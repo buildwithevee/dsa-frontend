@@ -13,7 +13,7 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
-
+import { FaTrashArrowUp } from "react-icons/fa6";
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
@@ -115,6 +115,14 @@ const Sidebar = () => {
                   <MdOutlineSettings size={20} />
                 </span>
                 <span className="menu-link-text">Settings</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/trash" className="menu-link">
+                <span className="menu-link-icon">
+                  <FaTrashArrowUp size={20} />
+                </span>
+                <span className="menu-link-text">Trash</span>
               </Link>
             </li>
             <li className="menu-item">
