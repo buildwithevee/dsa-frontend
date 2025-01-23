@@ -15,7 +15,11 @@ const ReportPage = () => {
     const [endDate, setEndDate] = useState("");
     const [branch, setBranch] = useState("");
     const [loading, setLoading] = useState("");
-
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [employeeId, setEmployeeId] = useState("")
+    const [employeeName, setEmployeeName] = useState("")
+    const [searchTerm, setSearchTerm] = useState('');
     const handleDownload = async () => {
         if (!startDate || !endDate) {
             toast.error("Add both date")
@@ -26,7 +30,7 @@ const ReportPage = () => {
         setLoading(true);
         try {
             const response = await axios.get(
-                `${apiBaseUrl}/reports/get-between?startDate=${startDate}&endDate=${endDate}&branch=${branch}`);
+                `${apiBaseUrl}/reports/get-between?startDate=${startDate}&endDate=${endDate}&branch=${branch}&assignedTo=${employeeName}`);
 
             if (response.status !== 200) {
                 toast.error("Erro while getting data")
@@ -36,6 +40,10 @@ const ReportPage = () => {
             const data = response.data.data
                 .map(({ _id, __v, ...rest }) => rest); // Exclude _id and __v fields
             console.log(data);
+            if (data.length === 0) {
+                toast.success("No data found!");
+                return;
+            }
 
             const worksheet = XLSX.utils.json_to_sheet(data);
 
@@ -53,7 +61,7 @@ const ReportPage = () => {
             const blob = new Blob([excelBuffer], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
             });
-            saveAs(blob, `${startDate}to${endDate}${branch?`of_branch_${branch}`:""}.xlsx`);
+            saveAs(blob, `${startDate}to${endDate}${branch ? `of_branch_${branch}` : ""}.xlsx`);
 
             // Perform additional operations with the data if needed
             // For example, triggering a download or updating the UI
@@ -62,6 +70,41 @@ const ReportPage = () => {
         } finally {
             setLoading(false);
         }
+    };
+    const searchEmployees = async (term) => {
+        try {
+            const response = await axios.get(`${apiBaseUrl}/product/search-employee?searchTerm=${term}`);
+            if (response.status === 200 && response.data.success) {
+                setSearchResults(response.data.employees || []);
+                setShowSuggestions(true);
+            }
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+            setSearchResults([]);
+        }
+    };
+    const handleChange = (e) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+
+
+        // Trigger employee search on typing in AssignedTo field
+        if (name === 'AssignedTo') {
+            setSearchTerm(value);
+            setEmployeeName(value)
+            if (value) {
+                searchEmployees(value);
+            } else {
+                setSearchResults([]);
+                setShowSuggestions(false);
+            }
+        }
+    };
+    const handleSuggestionClick = (employee) => {
+        console.log(employee);
+        setEmployeeId(employee.Emp_ID)
+        setEmployeeName(employee.Emlpoyee_Name)
+        setShowSuggestions(false);
     };
     return (
         <div className='flex flex-col gap-5'>
@@ -94,6 +137,33 @@ const ReportPage = () => {
                             {/* Add more branches as needed */}
                         </select>
                     </div>
+                </div>
+                <div className="flex flex-col">
+                    <label htmlFor="AssignedTo" className={`text-sm font-medium ${theme === LIGHT_THEME ? 'text-gray-700' : 'text-white'}`}>
+                        Assigned To <span className='text-gray-400'>(optional)</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="AssignedTo"
+                        name="AssignedTo"
+                        value={employeeName}
+                        onChange={handleChange}
+                        required
+                        className={`mt-2 p-3 border ${theme === LIGHT_THEME ? 'border-gray-300' : 'border-gray-600 text-white'} rounded-md  focus:ring-2 focus:ring-blue-500 focus:outline-none ${theme === DARK_THEME ? 'bg-[#383854] text-white' : 'bg-transparent'}`}
+                    />
+                    {showSuggestions && searchResults.length > 0 && (
+                        <ul className={`absolute z-10 mt-20 w-fit  border border-gray-300 rounded-md shadow-lg overflow-hidden ${theme === DARK_THEME ? 'bg-[#373753] text-white border-gray-600 ' : 'bg-white'}`}>
+                            {searchResults.map((employee) => (
+                                <li
+                                    key={employee._id}
+                                    className={`px-4 py-2 hover:bg-blue-600 cursor-pointer ${theme === LIGHT_THEME ? "hover:text-white" : ""} `}
+                                    onClick={() => handleSuggestionClick(employee)}
+                                >
+                                    {employee.Emlpoyee_Name} (ID: {employee.Emp_ID})
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
                 {/* Start Date */}
                 <div className="flex flex-col">

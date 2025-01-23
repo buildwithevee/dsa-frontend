@@ -1,7 +1,8 @@
 import { useContext, useEffect, useRef } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
-import { LIGHT_THEME } from "../../constants/themeConstants";
+import { DARK_THEME, LIGHT_THEME } from "../../constants/themeConstants";
 import logo from "../../assets/logo/logo.png";
+import logoDark from "../../assets/logo/logo_dark.png";
 import {
   MdOutlineAddBox,
   MdOutlineShoppingBag,
@@ -46,9 +47,9 @@ const Sidebar = () => {
       <div className="sidebar-top">
         <div className="sidebar-brand">
           <img
-            src={theme === LIGHT_THEME ? logo : logo}
+            src={theme === LIGHT_THEME ? logoDark : logo}
             alt="Logo"
-            className="w-8 sm:w-12 md:w-16 lg:w-32"
+            className={`${theme === DARK_THEME ? "w-8 sm:w-12 md:w-16 lg:w-32" : "w-6 sm:w-10 md:w-14 lg:w-24"}`}
           />
         </div>
       </div>
