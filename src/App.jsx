@@ -13,6 +13,7 @@ import SingleProduct from "./screens/singleProduct/SingleProduct.jsx";
 import EditProduct from "./screens/edit/EditProduct.jsx";
 import LoginPage from "./screens/login/Login.jsx";
 import SettingsPage from "./screens/settings/SettingsPage.jsx";
+import EmpData from "./screens/employeeData/EmpData.jsx";
 import TrashPage from "./screens/trash/TrashList.jsx";
 import ReportPage from "./screens/reports/ReportPage.jsx";
 import { useDispatch } from "react-redux";
@@ -74,6 +75,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <ProductList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/employee-data"
+              element={
+                <PrivateRoute>
+                  <EmpData />
                 </PrivateRoute>
               }
             />

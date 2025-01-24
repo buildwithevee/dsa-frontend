@@ -14,6 +14,7 @@ const EditProduct = () => {
         EnrollDate: '',
         Compilance: false,
         AssignedTo: '',
+        Employee_ID: '',
         warranty: "",
         note: "",
         branch: "",
@@ -58,7 +59,7 @@ const EditProduct = () => {
         }
     };
     const handleSuggestionClick = (employee) => {
-        setProductData({ ...productData, AssignedTo: employee.Emlpoyee_Name });
+        setProductData({ ...productData, AssignedTo: employee.Emlpoyee_Name, Employee_ID: employee.Emp_ID });
         setShowSuggestions(false);
     };
     const handleSubmit = async (e) => {

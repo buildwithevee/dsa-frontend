@@ -9,7 +9,9 @@ import {
   MdOutlineSettings,
   MdOutlineLogout,
   MdOutlineGridView,
+
 } from "react-icons/md";
+import { GrUserWorker } from "react-icons/gr";
 import { TbReportAnalytics } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.scss";
@@ -78,6 +80,18 @@ const Sidebar = () => {
                   <MdOutlineShoppingBag size={20} />
                 </span>
                 <span className="menu-link-text">Products</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link
+                to="/employee-data"
+                className={`menu-link ${location.pathname === "/employee-data" ? "active" : ""
+                  }`}
+              >
+                <span className="menu-link-icon">
+                  <GrUserWorker size={18} />
+                </span>
+                <span className="menu-link-text">Employee Data</span>
               </Link>
             </li>
 

@@ -14,6 +14,7 @@ const ProductAddPage = () => {
         EnrollDate: '',
         Compilance: false,
         AssignedTo: '',
+        Employee_ID: '',
         warranty: "",
         note: "",
         branch: "",
@@ -56,7 +57,9 @@ const ProductAddPage = () => {
         }
     };
     const handleSuggestionClick = (employee) => {
-        setProductData({ ...productData, AssignedTo: employee.Emlpoyee_Name });
+        console.log(employee);
+
+        setProductData({ ...productData, AssignedTo: employee.Emlpoyee_Name, Employee_ID: employee.Emp_ID });
         setShowSuggestions(false);
     };
     const handleSubmit = async (e) => {
@@ -82,7 +85,8 @@ const ProductAddPage = () => {
                     Compilance: false,
                     AssignedTo: '',
                     branch: "",
-                    note: "", warranty: ""
+                    note: "", warranty: "",
+                    Employee_ID: ""
                 });
                 navigate(`/product/${response.data?.product?._id}`);
             }
