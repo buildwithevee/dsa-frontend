@@ -105,9 +105,9 @@ function App() {
             <Route
               path="/product/:id"
               element={
-                <PrivateRoute>
+                <PublicRoute>
                   <SingleProduct />
-                </PrivateRoute>
+                </PublicRoute>
               }
             />
             <Route
